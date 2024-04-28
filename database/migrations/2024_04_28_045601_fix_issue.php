@@ -4,7 +4,6 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-
 return new class extends Migration
 {
     /**
@@ -12,13 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create("courses", function(blueprint $table) {
+        //
+        Schema::dropIfExists('courses');
+        Schema::create('courses', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger("instructorId");
+            $table->bigInteger("categoryId");
+
             $table->string("title");
             $table->text("description");
-            $table->unsignedBigInteger("durationHours");
-            $table->unsignedBigInteger("durationMinutes");
-            $table->string("prl");
+            $table->bigInteger("durationHours");
+            $table->bigInteger("durationMinutes");
+            $table->string("picUrl");
+            
             $table->double("price");
             
 
@@ -27,15 +32,14 @@ return new class extends Migration
             // $table->foreign("user_id")->references("id")->on("users");
             $table->timestamp("created_at");
             $table->timestamp("updated_at");
-            
         });
     }
- /**
+
+    /**
      * Reverse the migrations.
      */
     public function down(): void
     {
         //
     }
-   
 };
